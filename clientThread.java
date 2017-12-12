@@ -1,4 +1,4 @@
-package chatServer;,
+package chatserver;,
 
 import java.io.*;
 import java.net.*;
@@ -43,7 +43,7 @@ public class clientThread extends Thread{
 			to_client.println("JOINED_CHATROOM: "+room_name);
 			to_client.println("SERVER_IP: "+InetAddress.getLocalHost().getHostAddress());
 			to_client.println("PORT: "+client_port);
-			to_client.println("ROOM_REF: "+956854);
+			to_client.println("ROOM_REF: 956854");
 			synchronized(this){
 				for(int i = 0; i < maxclients; i++){
 					if(clients[i] != null && clients[i] == this){
@@ -73,6 +73,21 @@ public class clientThread extends Thread{
 					}
 				}
 			}
+			to_client.println("LEFT_CHATROOM: 956854\nJOIN_ID: "+this.client_id);
+			
+			synchronized(this){
+				for(int i=0; i < maxclients; i++){
+					if(clients[i] == this){
+						clients[i] = null;
+					}
+				}
+			}
+			
+			from_client.close();
+			to_client.close();
+			client_socket.close();
+		} catch(IOException e){
+			System.out.println("Error in clientThread line 90");
 		}
 	}
 }
