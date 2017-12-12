@@ -1,11 +1,12 @@
-package chatserver;,
+package chatServer;
 
 import java.io.*;
 import java.net.*;
+import java.util.*;
 
 public class clientThread extends Thread{
 	
-	private int client_id = null;
+	private int client_id = 0;
 	private DataInputStream from_client = null;
 	private PrintStream to_client = null;
 	private Socket client_socket = null;
@@ -28,17 +29,16 @@ public class clientThread extends Thread{
 			String input;
 			String name = null;
 			String client_ip = null;
-			int client_port = null;
+			int client_port = 0;
 			String room_name = null;
 			Random rand = new Random();
-			while(name==null || client_ip==null || client_port==null || room_name==null){
+			while(name==null || client_ip==null || client_port==0 || room_name==null){
 				input = from_client.nextLine().trim();
-		 			if(input.startsWith("JOIN_CHATROOM:")) room_name = input.substr(12,input.length);
-					else if(input.startsWith("CLIENT_IP:")) client_ip = input.substr(8,input.length);
-					else if(input.startsWith("PORT:")) client_port = input.substr(5,input.length);
-					else if(input.startsWith("CLIENT_NAME:")) name = input.substr(11,input.length);
-					else to_client.println("invalid command");
-				}
+		 		if(input.startsWith("JOIN_CHATROOM:")) room_name = input.substring(12,input.length());
+				else if(input.startsWith("CLIENT_IP:")) client_ip = input.substring(8,input.length());
+				else if(input.startsWith("PORT:")) client_port = Integer.parseInt(input.substring(5,input.length()));
+				else if(input.startsWith("CLIENT_NAME:")) name = input.substring(11,input.length());
+				else to_client.println("invalid command");
 			}
 			to_client.println("JOINED_CHATROOM: "+room_name);
 			to_client.println("SERVER_IP: "+InetAddress.getLocalHost().getHostAddress());
@@ -60,7 +60,7 @@ public class clientThread extends Thread{
 			}
 			while(true){
 				String msg = from_client.nextLine();
-				if(line.startsWith("LEAVE_CHATROOM:"){
+				if(msg.startsWith("LEAVE_CHATROOM:")){
 					break;
 				}
 				
@@ -68,7 +68,7 @@ public class clientThread extends Thread{
 			}
 			synchronized(this){
 				for (int i = 0; i < maxclients; i++){
-					if(clients[i] != null && clients[i] != this && clients[i].client_id != null){
+					if(clients[i] != null && clients[i] != this && clients[i].client_id != 0){
 						clients[i].to_client.println(""+name+" left");
 					}
 				}
