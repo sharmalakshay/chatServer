@@ -1,2 +1,3 @@
-javac -classpath . chat/server/*.java
-java -classpath . chat/server/StartServer 8190
+cd ..
+javac -classpath . chatserver/*.java
+java -classpath . chatserver/server $1
