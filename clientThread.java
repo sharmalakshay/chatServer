@@ -63,6 +63,10 @@ public class clientThread extends Thread{
 				if(msg.startsWith("LEAVE_CHATROOM:")){
 					break;
 				}
+				else if(msg.startsWith("HELO")){
+					String text = msg.substring(5,msg.length());
+					to_client.println("HELO "+text+"\nIP:"+client_ip+"\nPort:"+client_port+"\nStudentID:[your student ID]\n");
+				}
 				
 				
 			}

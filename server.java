@@ -19,6 +19,7 @@ public class server{
 			
 			try{
 				server_socket = new ServerSocket(port);
+				System.out.println("Server started on :"+port);
 			}catch(IOException e){
 				System.out.println("Error on server.java try 1:\n"+e.getMessage());
 			}
