@@ -15,7 +15,7 @@ java udp/chat/Join Lakshay localhost 8190		//localhost being the ip address if c
 
 
 I HAVE TESTED IT RUNNING on scss nebula.
-(I created a debian machine, ran server on it and then ran the client on a scss virtual machine)
+(I created a debian machine, ran server on it and then ran the client on a scss virtual lab)
 
 
 NO CLIENT PROGRAM IS DEVELOPED FOR TCP version because I just wanted to check the connection by that.
