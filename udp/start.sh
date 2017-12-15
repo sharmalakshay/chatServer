@@ -1,0 +1,1 @@
+java -classpath . chat/server/StartServer 8190
